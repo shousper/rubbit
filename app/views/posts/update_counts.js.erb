@@ -1,0 +1,4 @@
+$('#vote_widget_<%= @post.id %> .count').text("<%= number_to_human @post.votes, units: { unit: '', thousand: 'K', million: 'M', billion: 'B', trillion: 'T' } %>");
+<%- if @post.user == current_user %>
+    $('#my_karma').text("(<%= current_user.karma %>)");
+<%- end %>

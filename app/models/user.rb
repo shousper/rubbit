@@ -9,4 +9,8 @@ class User < ActiveRecord::Base
   # Default karma for new users.
   before_create { self.karma = 1 }
 
+  def to_param
+    username
+  end
+
 end

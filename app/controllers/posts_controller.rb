@@ -1,15 +1,6 @@
 class PostsController < ApplicationController
   before_filter :authenticate_user!
 
-  def index
-    @posts = Post.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @posts }
-    end
-  end
-
   def show
     @post = Post.find(params[:id])
     @posts = @post.children
@@ -23,6 +14,11 @@ class PostsController < ApplicationController
   def new
     @post = current_user.posts.build
 
+    if params[:post_id]
+      @post.parent_id = params[:post_id]
+      @parent = Post.find(@post.parent_id)
+    end
+
     respond_to do |format|
       format.html # new.html.erb
       format.json { render json: @post }
@@ -34,8 +30,8 @@ class PostsController < ApplicationController
   end
 
   def create
-    @post = current_user.posts.build(params[:post])
-    @post.vote_up!
+    @post = current_user.posts.build(body: params[:post][:body])
+    @post.parent_id = params[:post_id] if params[:post_id] # Always use URL
 
     respond_to do |format|
       if @post.save
@@ -62,23 +58,14 @@ class PostsController < ApplicationController
     end
   end
 
-  def destroy
-    @post = current_user.posts.find(params[:id])
-    @post.destroy
-
-    respond_to do |format|
-      format.html { redirect_to posts_url }
-      format.json { head :no_content }
-    end
-  end
-
   def up
     @post = Post.find(params[:id])
 
     respond_to do |format|
-      if @post.vote_up!
+      if @post.vote_up!(current_user)
         format.html { redirect_to @post, notice: 'Vote accepted!' }
         format.json { head :no_content }
+        format.js { render 'update_counts' }
       else
         format.html { redirect_to @post, error: 'Unable to vote.' }
         format.json { render json: @post.errors, status: :unprocessable_entity }
@@ -93,6 +80,7 @@ class PostsController < ApplicationController
       if @post.vote_down!(current_user)
         format.html { redirect_to @post, notice: 'Vote accepted!' }
         format.json { head :no_content }
+        format.js { render 'update_counts' }
       else
         format.html { redirect_to @post, error: 'Unable to vote.' }
         format.json { render json: @post.errors, status: :unprocessable_entity }

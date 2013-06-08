@@ -1,16 +1,18 @@
 Rubbit::Application.routes.draw do
 
-  resources :posts do
-    member do
-      put :up, :down
-    end
-  end
-
-  devise_for :users
+  root to: 'static_pages#home'
 
   get '/about' => 'static_pages#about'
 
-  root to: 'static_pages#home'
+  resources :posts, except: [:index, :destroy] do
+    member do
+      put :up, :down
+    end
+
+    resources :posts, path: 'reply', only: [:new, :create], path_names: { new: '' }
+  end
+
+  devise_for :users #, param: 'username'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

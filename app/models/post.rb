@@ -3,7 +3,7 @@ class Post < ActiveRecord::Base
 
   attr_accessible :body
 
-  acts_as_tree order: "votes DESC, created_at DESC"
+  acts_as_tree order: "votes DESC, updated_at DESC"
 
   belongs_to :user
 
@@ -14,15 +14,20 @@ class Post < ActiveRecord::Base
 
   def vote_down!(voter)
     self.decrement! :votes
-    user.decrement! :karma
-    voter.decrement! :karma
+    voter.decrement! :karma # Costs karma to down vote someone else.
+    user.decrement! :karma # Costs poster karma to be down voted as well.
   end
 
-  def vote_up!
+  def vote_up!(voter)
     self.increment! :votes
-    user.increment! :karma
+    if user == voter
+      voter.decrement! :karma # Costs karma to up vote yourself.
+    else
+      user.increment! :karma # Boosts posters karma.
+    end
   end
 
+  # Returns total number of comments below this post.
   def count_children
     count = children.count
     if count

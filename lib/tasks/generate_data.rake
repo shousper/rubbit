@@ -54,7 +54,7 @@ def randomise_votes
   print "  Randomising votes on #{count} posts."
   users = User.all
   Post.all.sample(count).each do |post|
-    rand(10..100).times { post.vote_up! }
+    rand(10..100).times { post.vote_up!(users.sample(1).first) }
     rand(0..25).times { post.vote_down!(users.sample(1).first) }
     print '.'
   end

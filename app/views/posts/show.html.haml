@@ -7,12 +7,12 @@
       %b Poster:
       = @post.user.username
     .time
-      %b Created:
-      = @post.created_at.to_s(:short)
-    - if current_user == @post.user
-      = link_to 'Edit', edit_post_path(@post)
+      %b Submitted:
+      = time_ago_in_words @post.created_at
+      ago
+      = "(#{@post.created_at.to_s(:long)})"
 
-- if @posts
+- if @posts && @posts.any?
   %h5 Replies
   %ul.posts
     = render @posts

@@ -13,7 +13,8 @@
       .btn-group
         %a.btn.profile.dropdown-toggle{'data-toggle' => 'dropdown', href: '#'}
           = gravatar_for current_user, 20
-          = "#{current_user.username} (#{current_user.karma})"
+          = current_user.username
+          %span#my_karma= "(#{current_user.karma})"
           %span.caret
         %ul.dropdown-menu.pull-right
           = menu_item "Profile", edit_user_registration_path
