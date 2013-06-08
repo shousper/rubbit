@@ -28,7 +28,7 @@ def make_posts
   users = User.all
   count.times do |n|
     user = users.sample(1).first
-    user.posts.create!(body: Faker::Lorem.paragraph(3))
+    user.posts.create!(body: Faker::Lorem.paragraph(rand(1..5)))
     print '.'
   end
   puts '.'
