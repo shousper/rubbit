@@ -1,3 +1,9 @@
+/*
+ * require twitter-bootstrap-static/bootstrap
+ *= require twitter-bootstrap-static/sprites
+ */
+@import "twitter/bootstrap/bootstrap";
+
 
 body {
     padding-top: 70px;
@@ -7,3 +13,98 @@ body {
     padding: 0 15px;
 }
 
+.vote-widget {
+    font-size: 130%;
+    width: 40px;
+
+    .up form input,
+    .count,
+    .down form input {
+        height: 20px;
+        text-align: center;
+    }
+
+    .up form,
+    .down form {
+        margin: 0;
+
+        input {
+            display: block;
+            width: 100%;
+            padding: 0;
+            margin: 0;
+            border: 0;
+            background: none;
+        }
+    }
+}
+
+.posts {
+    li {
+        display: block;
+        position: relative;
+        clear: both;
+        margin-bottom: 5px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+
+        .vote-widget {
+            position: absolute;
+            z-index: 1;
+        }
+        .icon {
+            position: absolute;
+            top: 23px;
+            right: 10px;
+        }
+        a.body {
+            display: block;
+            height: 60px;
+            border: 0;
+            padding: 5px 30px 5px 40px;
+            box-sizing: border-box;
+
+            .snippet {
+                line-height: 130%;
+                height: 40px;
+                overflow: hidden;
+            }
+        }
+        .details {
+            position: absolute;
+            left: 40px; right: 35px;
+            bottom: 0;
+
+            time,
+            .poster,
+            .comments {
+                float: left;
+                font-size: 80%;
+                color: #ccc;
+                margin-right: 10px;
+            }
+            time {
+                float: right;
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+.post {
+    .well;
+    .well-small;
+    .clearfix;
+
+    .vote-widget {
+        position: absolute;
+        z-index: 1;
+    }
+
+    .body,
+    .details {
+        margin-left: 50px;
+    }
+}
+
+@import "twitter/bootstrap/responsive";

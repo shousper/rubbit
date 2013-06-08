@@ -1,6 +1,10 @@
 Rubbit::Application.routes.draw do
 
-  resources :posts
+  resources :posts do
+    member do
+      put :up, :down
+    end
+  end
 
   devise_for :users
 

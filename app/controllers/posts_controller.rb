@@ -12,6 +12,7 @@ class PostsController < ApplicationController
 
   def show
     @post = Post.find(params[:id])
+    @posts = @post.children
 
     respond_to do |format|
       format.html # show.html.erb
@@ -70,4 +71,33 @@ class PostsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  def up
+    @post = Post.find(params[:id])
+
+    respond_to do |format|
+      if @post.vote_up!
+        format.html { redirect_to @post, notice: 'Vote accepted!' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to @post, error: 'Unable to vote.' }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  def down
+    @post = Post.find(params[:id])
+
+    respond_to do |format|
+      if @post.vote_down!(current_user)
+        format.html { redirect_to @post, notice: 'Vote accepted!' }
+        format.json { head :no_content }
+      else
+        format.html { redirect_to @post, error: 'Unable to vote.' }
+        format.json { render json: @post.errors, status: :unprocessable_entity }
+      end
+    end
+  end
+
 end

@@ -1,8 +1,12 @@
 - if current_user
-  %ul
+
+  %ul.nav.nav-tabs.nav-stacked.posts
     = render @posts
 
+  = will_paginate @posts
+
 - else
+
   .jumbotron
     %h1 Welcome to rubbit
     %p Prepare for death!

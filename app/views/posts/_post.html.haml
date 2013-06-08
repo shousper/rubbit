@@ -1,1 +1,13 @@
-%li= post.body
+%li
+  = render 'posts/vote_widget', p: post
+  %i.icon.icon-chevron-right
+  = link_to post, class: 'body' do
+    .snippet= truncate post.body, length: 200, separator: ' '
+  .details
+    .poster
+      Poster:
+      = post.user.username
+    .comments
+      Comments:
+      = post.count_children
+    = time_tag post.created_at, time_ago_in_words(post.created_at)

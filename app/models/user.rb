@@ -6,4 +6,7 @@ class User < ActiveRecord::Base
 
   has_many :posts
 
+  # Default karma for new users.
+  before_create { self.karma = 1 }
+
 end

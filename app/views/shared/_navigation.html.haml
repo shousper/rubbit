@@ -1,18 +1,24 @@
-= nav_bar fixed: :top, brand: 'rubbit', responsive: true do
+= nav_bar fixed: :top, brand: 'rubbit', responsive: false do
+
   = menu_group do
-    = menu_item "Home", root_path
-    = menu_item "Sign up", new_user_registration_path unless current_user
+    - if current_user
+      = menu_item "Post", new_post_path
+    - else
+      = menu_item "Sign up", new_user_registration_path
     = menu_item "About", about_path
+
   .pull-right
+
     - if current_user
       .btn-group
         %a.btn.profile.dropdown-toggle{'data-toggle' => 'dropdown', href: '#'}
           = gravatar_for current_user, 20
-          = current_user.username
+          = "#{current_user.username} (#{current_user.karma})"
           %span.caret
         %ul.dropdown-menu.pull-right
           = menu_item "Profile", edit_user_registration_path
           = menu_item "Logout", destroy_user_session_path, method: 'delete'
+
     - else
       = form_for User.new, url: user_session_path, html: { class: 'navbar-form form-inline pull-right' } do |f|
         = f.text_field :email, placeholder: 'Email', class: 'input-medium'

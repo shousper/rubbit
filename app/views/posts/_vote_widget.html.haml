@@ -1,0 +1,4 @@
+.vote-widget
+  .up= render 'posts/vote_up', p: p
+  .count= number_to_human p.votes, units: { unit: '', thousand: 'K', million: 'M', billion: 'B', trillion: 'T' }
+  .down= render 'posts/vote_down', p: p

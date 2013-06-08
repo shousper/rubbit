@@ -1,15 +1,19 @@
-%p#notice= notice
 
-%p
-  %b Body:
-  = @post.body
-%p
-  %b Votes:
-  = @post.votes
-%p
-  %b User:
-  = @post.user_id
+.post
+  = render 'posts/vote_widget', p: @post
+  .body= @post.body
+  .details
+    .poster
+      %b Poster:
+      = @post.user.username
+    .time
+      %b Created:
+      = @post.created_at.to_s(:short)
+    - if current_user == @post.user
+      = link_to 'Edit', edit_post_path(@post)
 
-= link_to 'Edit', edit_post_path(@post)
-\|
-= link_to 'Back', posts_path
+- if @posts
+  %h5 Replies
+  %ul.posts
+    = render @posts
+
