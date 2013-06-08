@@ -2,10 +2,11 @@
 
   = menu_group do
     - if current_user
-      = menu_item "Post", new_post_path
+      = menu_item "post", new_post_path
+      = menu_item "named", named_posts_path
     - else
-      = menu_item "Sign up", new_user_registration_path
-    = menu_item "About", about_path
+      = menu_item "sign up", new_user_registration_path
+    = menu_item "about", about_path
 
   .pull-right
 
@@ -17,11 +18,11 @@
           %span#my_karma= "(#{current_user.karma})"
           %span.caret
         %ul.dropdown-menu.pull-right
-          = menu_item "Profile", edit_user_registration_path
-          = menu_item "Logout", destroy_user_session_path, method: 'delete'
+          = menu_item "profile", edit_user_registration_path
+          = menu_item "logout", destroy_user_session_path, method: 'delete'
 
     - else
       = form_for User.new, url: user_session_path, html: { class: 'navbar-form form-inline pull-right' } do |f|
-        = f.text_field :email, placeholder: 'Email', class: 'input-medium'
-        = f.password_field :password, placeholder: 'Password', class: 'input-medium'
-        = f.submit 'Sign in', class: 'btn'
+        = f.text_field :email, placeholder: 'email', class: 'input-medium'
+        = f.password_field :password, placeholder: 'password', class: 'input-medium'
+        = f.submit 'sign in', class: 'btn'

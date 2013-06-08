@@ -1,13 +1,11 @@
-- if current_user
 
+- if @named
+  .popular
+    %span trending:
+    - @named.each do |n|
+      = link_to n.path, n
+
+- if @posts
   %ul.nav.nav-tabs.nav-stacked.posts
     = render @posts
-
   = will_paginate @posts
-
-- else
-
-  .jumbotron
-    %h1 Welcome to rubbit
-    %p Prepare for death!
-    %p You have to sign up before you get the Kool-Aid.

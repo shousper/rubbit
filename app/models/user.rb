@@ -6,6 +6,10 @@ class User < ActiveRecord::Base
 
   has_many :posts
 
+  validates :username, presence: true,
+                       length: { maximum: 30 },
+                       uniqueness: { case_sensitive: false }
+
   # Default karma for new users.
   before_create { self.karma = 1 }
 

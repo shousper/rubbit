@@ -1,9 +1,8 @@
 class StaticPagesController < ApplicationController
   def home
     if user_signed_in?
-      @posts = Post.where('parent_id IS NULL')
-        .order('votes DESC, updated_at DESC')
-        .paginate(page: params[:page])
+      @posts = Post.root_feed.paginate(page: params[:page])
+      @named = Post.root_named_feed.limit(10)
     end
   end
 

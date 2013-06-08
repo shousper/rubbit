@@ -1,8 +1,15 @@
 class PostsController < ApplicationController
   before_filter :authenticate_user!
 
+  def named
+    if user_signed_in?
+      @posts = Post.root_named_feed.paginate(page: params[:page])
+    end
+    render 'static_pages/home'
+  end
+
   def show
-    @post = Post.find(params[:id])
+    @post = Post.try_find(params[:id])
     @posts = @post.children
 
     respond_to do |format|
@@ -13,10 +20,14 @@ class PostsController < ApplicationController
 
   def new
     @post = current_user.posts.build
+    @nameable = true
 
     if params[:post_id]
-      @post.parent_id = params[:post_id]
-      @parent = Post.find(@post.parent_id)
+      @parent = Post.try_find(params[:post_id])
+      @post.parent_id = @parent.id
+
+      @has_root_path = @parent.path && !@parent.path.empty?
+      @nameable = @has_root_path
     end
 
     respond_to do |format|
@@ -25,13 +36,8 @@ class PostsController < ApplicationController
     end
   end
 
-  def edit
-    @post = Post.find(params[:id])
-  end
-
   def create
-    @post = current_user.posts.build(body: params[:post][:body])
-    @post.parent_id = params[:post_id] if params[:post_id] # Always use URL
+    @post = current_user.posts.build(params[:post])
 
     respond_to do |format|
       if @post.save
@@ -42,6 +48,10 @@ class PostsController < ApplicationController
         format.json { render json: @post.errors, status: :unprocessable_entity }
       end
     end
+  end
+
+  def edit
+    @post = Post.find(params[:id])
   end
 
   def update
@@ -59,7 +69,7 @@ class PostsController < ApplicationController
   end
 
   def up
-    @post = Post.find(params[:id])
+    @post = Post.try_find(params[:id])
 
     respond_to do |format|
       if @post.vote_up!(current_user)
@@ -74,7 +84,7 @@ class PostsController < ApplicationController
   end
 
   def down
-    @post = Post.find(params[:id])
+    @post = Post.try_find(params[:id])
 
     respond_to do |format|
       if @post.vote_down!(current_user)

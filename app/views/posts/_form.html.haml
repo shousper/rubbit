@@ -22,9 +22,20 @@
 
   = f.hidden_field :parent_id
 
-  .control-group
-    = f.label :body
-    .controls= f.text_area :body, class: 'input-large', rows: 8, cols: nil
+  = f.text_area :body, class: 'input-large', rows: 8, cols: nil, placeholder: 'Message..'
+
+  -# Only for new posts on named parents.
+  - if @nameable
+    - if @has_root_path
+      .input-prepend
+        %span.add-on= "#{@parent.path}:"
+        = f.text_field :name, class: 'input-large', placeholder: 'Make this a named rubbit?'
+    - else
+      = f.text_field :name, class: 'input-large', placeholder: 'Make this a named rubbit?'
+    %small.help-block
+      If you'd like to create a named rubbit, you can do so here.
+      Names have to be URL friendly, so anything that isn't a letter, number, hyphen (-) or underscore (_) will be replaced with hyphens (-).
+
 
   .form-actions
     = f.submit 'Save', class: 'btn btn-primary'
