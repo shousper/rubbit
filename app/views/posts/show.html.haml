@@ -1,17 +1,5 @@
 
-.post
-  = render 'posts/vote_widget', p: @post
-  .body= @post.body
-  .details
-    .poster
-      %b Poster:
-      = @post.user.username
-    .time
-      %b Submitted:
-      = time_ago_in_words @post.created_at
-      ago
-      = "(#{@post.created_at.to_s(:long)})"
-  = link_to 'Reply', new_post_post_path(@post), class: 'btn btn-primary pull-right'
+= render 'detail', post: @post
 
 - if @posts && @posts.any?
   %h5 Replies

@@ -1,7 +1,7 @@
 class Post < ActiveRecord::Base
   include ActsAsTree
 
-  attr_accessible :body, :name
+  attr_accessible :body, :name, :parent_id
 
   acts_as_tree order: "votes DESC, updated_at DESC"
 

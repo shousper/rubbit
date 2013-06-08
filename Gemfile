@@ -17,6 +17,7 @@ gem 'bootstrap-will_paginate'
 gem 'gravatar-ultimate'
 gem 'faker'
 gem 'acts_as_tree'
+gem 'rails_autolink'
 
 # Gems used only for assets and not required
 # in production environments by default.

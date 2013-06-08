@@ -1,0 +1,18 @@
+.post
+  = render 'posts/vote_widget', p: post
+  .body= auto_link post.body
+  .details
+    .poster
+      %b Poster:
+      = post.user.username
+    .time
+      %b Submitted:
+      = time_ago_in_words post.created_at
+      ago
+      = "(#{post.created_at.to_s(:long)})"
+
+  .btn-group.pull-right
+    = link_to 'List', root_path, class: 'btn'
+    = link_to 'Parent', post_path(post.parent_id), class: 'btn btn-info' if post.parent_id
+    - unless current_page?(new_post_post_path(post))
+      = link_to 'Reply', new_post_post_path(post), class: 'btn btn-primary' if user_signed_in?

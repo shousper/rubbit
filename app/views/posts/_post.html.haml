@@ -4,8 +4,9 @@
   = link_to post, class: 'body' do
     .snippet= truncate post.body, length: 200, separator: ' '
   .details
-    .reply
-      = link_to 'Reply', new_post_post_path(post)
+    - if user_signed_in?
+      .reply
+        = link_to 'Reply', new_post_post_path(post)
     .poster
       Poster:
       = post.user.username

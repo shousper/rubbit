@@ -1,10 +1,8 @@
 class PostsController < ApplicationController
-  before_filter :authenticate_user!
+  before_filter :authenticate_user!, except: [:show, :named]
 
   def named
-    if user_signed_in?
-      @posts = Post.root_named_feed.paginate(page: params[:page])
-    end
+    @posts = Post.root_named_feed.paginate(page: params[:page])
     render 'static_pages/home'
   end
 

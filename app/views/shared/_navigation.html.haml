@@ -3,9 +3,9 @@
   = menu_group do
     - if current_user
       = menu_item "post", new_post_path
-      = menu_item "named", named_posts_path
     - else
       = menu_item "sign up", new_user_registration_path
+    = menu_item "named", named_posts_path
     = menu_item "about", about_path
 
   .pull-right
