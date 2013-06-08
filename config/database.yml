@@ -1,0 +1,24 @@
+
+development:
+  adapter: postgresql
+  encoding: unicode
+  database: rubbit_development
+  pool: 5
+  username: rubbit
+  password: 948f6v7snp4e8e7p5o7eoisfe54gd4t4ey
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: rubbit_test
+  pool: 5
+  username: rubbit
+  password: 948f6v7snp4e8e7p5o7eoisfe54gd4t4ey
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: rubbit_production
+  pool: 5
+  username: rubbit
+  password: 45oif4n68e58n65v6pv98w6s56vw8nv589
