@@ -1,6 +1,9 @@
 - if current_user
+  %ul
+    = render @posts
 
 - else
   .jumbotron
     %h1 Welcome to rubbit
-    %p Prepare for death.
+    %p Prepare for death!
+    %p You have to sign up before you get the Kool-Aid.

@@ -1,5 +1,7 @@
 Rubbit::Application.routes.draw do
 
+  resources :posts
+
   devise_for :users
 
   get '/about' => 'static_pages#about'
