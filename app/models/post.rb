@@ -37,7 +37,7 @@ class Post < ActiveRecord::Base
     unless path.empty?
       if self.parent_id
         parent = Post.find(self.parent_id)
-        path = "#{parent.path}:#{@post.path}" unless parent.path.nil? || parent.path.empty?
+        path = "#{parent.path}:#{path}" unless parent.path.nil? || parent.path.empty?
       end
       self.path = path
     end
